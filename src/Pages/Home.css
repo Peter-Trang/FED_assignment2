@@ -8,11 +8,19 @@
 
 .create-module {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: auto;
-    width: 900px;
+    width: fit-content
 }
 
-.create-module > * {
-    margin: 5rem
+.button-container button {
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    color: #003d73;
+}
+
+.button-container button:hover {
+    background-color: #003d73;
+    color: #fff;
 }

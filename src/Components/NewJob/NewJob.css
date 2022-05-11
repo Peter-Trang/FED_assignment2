@@ -1,4 +1,4 @@
-.new-model {
+.new-job {
     margin: auto;
     padding: 1rem;
     border-radius: 0.25rem;
@@ -7,7 +7,7 @@
     overflow: hidden;
 }
 
-.new-model-wrapper {
+.new-job-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
