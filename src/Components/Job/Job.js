@@ -5,24 +5,34 @@ import {IoTrashSharp, IoClose, IoClipboard } from 'react-icons/io5';
 
 const Job =(props) => {
   const [showModelsToAdd, setShowModelsToAdd] = useState(false);
-  const [isModelSelected, setIsModelSelected ] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("");
 
   const showModels = () => {
     setShowModelsToAdd(!showModelsToAdd);
   }
 
-  const toggleModelSelection = () => {
-    setIsModelSelected(!isModelSelected);
-    
-  }
+
+    const handleModelName = (event) => {
+        setSelectedModel(event.target.value);
+    }
+
+  let modelsAddedToJob = null;
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onAddModel(props.id, props.modelName);
-    localStorage.setItem("joblist", JSON.stringify(props.joblist));
-    setShowModelsToAdd(false);
-  }
+    const modellist = JSON.parse(localStorage.getItem("modellist"));
 
+    modellist.forEach((model) => {
+      if (model.name === selectedModel) {
+        console.log('success! Name found')
+        setShowModelsToAdd(false);
+        return;
+      } else {
+        console.log('fail')
+        }
+      })
+  }
+  
   let toggleAddModelOption = null;
   
   if(showModelsToAdd) {
@@ -44,24 +54,15 @@ let modellistFromLocalStorage = JSON.parse(localStorage.getItem("modellist"))
           <p> <MdLocationOn/>{props.jobLocation}</p>
           <p><MdPaid/>{props.jobSalary}</p>
           <hr/>
-            {/* {showModelsToAdd && 
-             <div className='added-models'>Model #1</div>} */}
+            <div className='added-models'>{modelsAddedToJob}</div>
           <div className='expand-button' onClick={showModels}>
             {toggleAddModelOption}
              </div>
           {showModelsToAdd &&
           <form onSubmit={submitHandler} className='add-model-form-wrapper'>
-            <div className='model-tag-wrapper'>{ modellistFromLocalStorage.map((model) => {
-                return <div className={`current-available-models ${isModelSelected ? "selected" : ""}`} 
-                    onClick={toggleModelSelection}
-                    value={model.name}>
-                  {model.name}
-                  </div>})}
-            </div>
-            <div className='add-model-button-wrapper' >
-              <button type="submit" className=' button add-model-button' 
+            <input type='text' placeholder='Model name' onChange={handleModelName}/>
+              <button type="submit" className='button add-model-button' 
                 >Add Model</button>
-            </div>
           </form>}  
     </div>
   );
