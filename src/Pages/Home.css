@@ -1,0 +1,18 @@
+.home h2 {
+    text-align: center;
+}
+
+.create-new-job {
+    margin: auto;
+}
+
+.create-module {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 900px;
+}
+
+.create-module > * {
+    margin: 5rem
+}

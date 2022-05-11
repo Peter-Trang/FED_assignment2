@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.button {
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.3rem 1.5rem 0.3rem 1.5rem;
+  background: rgb(17, 79, 187);
+  float:right;
+  color: #fff;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: rgb(57, 111, 205);
+}

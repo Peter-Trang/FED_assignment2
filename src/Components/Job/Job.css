@@ -1,0 +1,83 @@
+.job {
+    margin-top: 1rem;
+    padding: 0 1rem 0 1rem;
+    width: auto;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: 0.2s;
+}
+
+.job:hover {
+    transform: scale(1.025);
+}
+
+.job hr {
+    border-width: 1px 0 0 0;
+}
+
+.job .job-title {
+    font-weight: 600;
+}
+
+.trash-icon {
+    float: right;
+    cursor: pointer;
+    color: rgb(183, 20, 20);   
+    margin-top: 0.25rem;
+}
+
+.trash-icon:hover {
+    transform: scale(1.1);
+}
+
+.added-models {
+    margin-bottom: 0.5rem;
+}
+
+.add-model-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-model-input {
+    height: 1.25rem;
+}
+
+.add-model-button {
+    margin-bottom: 0.5rem
+}
+
+.expand-button {
+    cursor: pointer;
+    margin: 0.5rem;
+    text-align: end;
+}
+
+h6 {
+    margin-block: 0;
+}
+
+.model-tag-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.current-available-models {
+    cursor: pointer;
+    background-color: rgb(35, 132, 100);
+    width: fit-content;
+    padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+    color: #fff;
+}
+
+.current-available-models.selected {
+    background-color: rgb(7, 106, 73);
+}
+
+.current-available-models:hover {
+    transform: scale(1.05);
+}

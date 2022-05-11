@@ -1,0 +1,28 @@
+.new-job {
+    margin: auto;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    width: 400px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.new-job-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.labels {
+    display: flex;
+    flex-direction: column;
+}
+
+.labels >*, .inputs >* {
+    margin-bottom: 0.5rem;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,24 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar h1 {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 0.25rem;
+    width: fit-content;
+    font-size: 2rem;
+    background-color: rgb(239, 196, 24);
+}
+
+.button-logout {
+    margin: 1rem;
+    background-color: rgb(150, 30, 150);
+    transition: 0.4s;
+}
+
+.button-logout:hover {
+    background-color: rgb(200, 50, 200);
+}

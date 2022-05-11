@@ -1,0 +1,29 @@
+.login-form {
+    margin: auto;
+    margin-top: 3rem;
+    padding: 1rem;
+    width: 400px;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+}
+
+.login-button {
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.3rem 1.5rem 0.3rem 1.5rem;
+    background: rgb(17, 79, 187);
+    color: #fff;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background: rgb(57, 111, 205);
+}
+
+.error{
+    background: red;
+    width: fit-content;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 0.25rem;
+    color: #fff;
+}

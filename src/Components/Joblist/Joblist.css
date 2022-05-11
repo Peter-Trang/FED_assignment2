@@ -1,0 +1,11 @@
+.joblist {
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
+    width: 400px;
+    min-height: 400px;
+    border-radius: 0.25rem;
+    border: 1px solid #cccccc;
+    background-color: #f9f8f8;
+}
