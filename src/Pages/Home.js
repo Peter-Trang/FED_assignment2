@@ -46,24 +46,22 @@ function Home() {
     localStorage.setItem("managerlist", JSON.stringify(managerlist));
   }, [managerlist]);
 
-
   const createJobHandler = (enteredJobData) => {
-      
-      setJoblist((previousJoblist) => {
-        return [...previousJoblist, 
-          {
-            jobTitle: enteredJobData.jobTitle,
-            jobLocation: enteredJobData.jobLocation,
-            jobSalary: enteredJobData.jobSalary,
-            id: Math.random().toString(),
-            key: Math.random().toString(),
-            models: []
-          }
-        ];
-      }); 
-
-      localStorage.setItem("joblist", JSON.stringify(joblist));
+    var url = "https://localhost:7181/api/Jobs";
+    fetch(url, {
+      method: 'POST', // Or PUT
+      body: JSON.stringify(enteredJobData), // assumes your data is in a form object on your instance.
+      credentials: 'include',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+        'Content-Type': 'application/json'
+      }
+    }).then(responseJson => {
+      console.log(responseJson);
+    })
+    .catch(error => alert('Something bad happened: ' + error));
   }
+  
 
     const removeJobHandler = (id, jobTitle) => {
       setJoblist((previousJoblist) => {
@@ -88,19 +86,20 @@ function Home() {
   }
 
   const createManagerHandler = (enteredManagerData) => {
-      
-    setManagerlist((previousManagerlist) => {
-      return [...previousManagerlist, 
-        {
-          managerName: enteredManagerData.managerName,
-          id: Math.random().toString(),
-          key: Math.random().toString(),
-        }
-      ];
-    }); 
-
-    localStorage.setItem("managerlist", JSON.stringify(managerlist));
-}
+    var url = "https://localhost:7181/api/Managers";
+    fetch(url, {
+      method: 'POST', // Or PUT
+      body: JSON.stringify(enteredManagerData), // assumes your data is in a form object on your instance.
+      credentials: 'include',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+        'Content-Type': 'application/json'
+      }
+    }).then(responseJson => {
+      //this.response = responseJson;
+    })
+    .catch(error => alert('Something bad happened: ' + error));
+  }
 
   const [Tab, setTab] = useState("Job");
 

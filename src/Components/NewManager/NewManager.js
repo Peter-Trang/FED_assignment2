@@ -2,37 +2,61 @@ import "./NewManager.css";
 import {useState} from "react";
 
 const NewManager = (props) => {
-    const [managerName, setManagerName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleManagerName = (event) => {
-        setManagerName(event.target.value);
+    const handleFirstName = (event) => {
+        setFirstName(event.target.value);
+    }
+    const handleLastName = (event) => {
+        setLastName(event.target.value);
+    }
+    const handleEmail = (event) => {
+        setEmail(event.target.value);
+    }
+    const handlePassword = (event) => {
+        setPassword(event.target.value);
     }
 
-    const submitHandler = (event) => {
+    const submitHandler = (event)  => {
         event.preventDefault();
         
         const managerData = {
-            managerName: managerName,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
         }
 
         props.onCreateManager(managerData);
-        setManagerName("");
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
     }
 
     return (
         <div className="new-manager">
-                <form onSubmit={submitHandler} className="new-manager-form">
-                    <div className="new-manager-wrapper">
-                    <div className="labels">
-                        <label>Manager Name: </label>
-                    </div>
-                    <div className="inputs">
-                        <input type="text" value={managerName} placeholder="Enter Name" onChange={handleManagerName} />
-                    </div>
-                    </div>
-                    <button className="button" type="submit">Create Manager</button>
-                </form>
-            </div>
+            <form onSubmit={submitHandler} className="new-manager-form">
+                <div className="new-manager-wrapper">
+                <div className="labels">
+                    <label>First name: </label>
+                    <label>Last name: </label>
+                    <label>Email: </label>
+                    <label>Password: </label>
+                </div>
+                <div className="inputs">
+                    <input type="text" value={firstName} placeholder="Enter first name" onChange={handleFirstName} />
+                    <input type="text" value={lastName} placeholder="Enter last name" onChange={handleLastName} />
+                    <input type="email" value={email} placeholder="Enter email" onChange={handleEmail} />
+                    <input type="password" value={password} placeholder="Enter password" onChange={handlePassword} />
+                </div>
+                </div>
+                <button className="button" type="submit">Create Manager</button>
+            </form>
+        </div>
     );
 }
 

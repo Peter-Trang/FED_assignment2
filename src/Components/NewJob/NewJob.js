@@ -2,34 +2,45 @@ import "./NewJob.css";
 import {useState} from "react";
 
 const NewJob = (props) => {
-    const [jobTitle, setJobTitle] = useState("");
-    const [jobLocation, setJobLocation] = useState("");
-    const [jobSalary, setJobSalary] = useState("");
+    const [customer, setCustomer] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [days, setDays] = useState("");
+    const [location, setLocation] = useState("");
+    const [comments, setComments] = useState("");
 
     const handleJobTitle = (event) => {
-        setJobTitle(event.target.value);
+        setCustomer(event.target.value);
     }
-    const handleJobLocation = (event) => {
-        setJobLocation(event.target.value);
+    const handleStartDate = (event) => {
+        setStartDate(event.target.value);
     }
-    const handleJobSalary = (event) => {
-        setJobSalary(event.target.value);
+    const handleDays = (event) => {
+        setDays(event.target.value);
     }
-    
+    const handleLocation = (event) => {
+        setLocation(event.target.value);
+    }
+    const handleComments = (event) => {
+        setComments(event.target.value);
+    }
 
-    const submitHandler = (event) => {
+    async function submitHandler(event){
         event.preventDefault();
         
         const jobData = {
-            jobTitle: jobTitle,
-            jobLocation: jobLocation,
-            jobSalary: jobSalary
+            customer: customer,
+            startDate: startDate,
+            days: days,
+            location: location,
+            comments: comments
         }
 
         props.onCreateJob(jobData);
-        setJobTitle("");
-        setJobLocation("");
-        setJobSalary("");
+        setCustomer("");
+        setStartDate("");
+        setDays("");
+        setLocation("");
+        setComments("");
     }
 
     return (
@@ -37,14 +48,18 @@ const NewJob = (props) => {
                 <form onSubmit={submitHandler} className="new-job-form">
                     <div className="new-job-wrapper">
                     <div className="labels">
-                        <label>Job title: </label>
-                        <label>Job location: </label>
-                        <label>Job salary: </label>
+                        <label>customer: </label>
+                        <label>startDate: </label>
+                        <label>days: </label>
+                        <label>location: </label>
+                        <label>comments: </label>
                     </div>
                     <div className="inputs">
-                        <input type="text" value={jobTitle} placeholder="Enter job title" onChange={handleJobTitle} />
-                        <input type="text" value={jobLocation} placeholder="Enter location" onChange={handleJobLocation}/>
-                        <input type="number" value={jobSalary} placeholder="Enter salary" onChange={handleJobSalary} />
+                        <input type="text" value={customer} placeholder="Enter job title" onChange={handleJobTitle} />
+                        <input type="date" value={startDate} placeholder="Enter location" onChange={handleStartDate}/>
+                        <input type="number" value={days} placeholder="Enter salary" onChange={handleDays} />
+                        <input type="text" value={location} placeholder="Enter salary" onChange={handleLocation} />
+                        <input type="text" value={comments} placeholder="Enter salary" onChange={handleComments} />
                     </div>
                     </div>
                     <button className="button" type="submit">Create Job</button>
