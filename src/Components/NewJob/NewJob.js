@@ -58,8 +58,8 @@ const NewJob = (props) => {
                         <input type="text" value={customer} placeholder="Enter job title" onChange={handleJobTitle} />
                         <input type="date" value={startDate} placeholder="Enter location" onChange={handleStartDate}/>
                         <input type="number" value={days} placeholder="Enter salary" onChange={handleDays} />
-                        <input type="text" value={location} placeholder="Enter salary" onChange={handleLocation} />
-                        <input type="text" value={comments} placeholder="Enter salary" onChange={handleComments} />
+                        <input type="text" value={location} placeholder="Enter location" onChange={handleLocation} />
+                        <input type="text" value={comments} placeholder="Enter comments" onChange={handleComments} />
                     </div>
                     </div>
                     <button className="button" type="submit">Create Job</button>

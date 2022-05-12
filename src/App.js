@@ -56,7 +56,7 @@ function App() {
         isLoggedIn: isLoggedIn,
       }}>
         <Navbar Logout={Logout} />
-        <Home />
+        {isLoggedIn && (<Home />)}
         {!isLoggedIn && (<LoginForm Login={Login} error={error} />)}
       </AuthContext.Provider>
     </div>

@@ -3,18 +3,16 @@ import Job from '../Job/Job';
 
 const Joblist = (props) =>{
 
-  const removeJobHandler = (id, jobTitle) => {
-		props.onRemoveJob(id, jobTitle);
+  const removeJobHandler = (jobId) => {
+		props.onRemoveJob(jobId);
 	};
 
   const displayJoblist = props.joblist.map((job) => (
     <Job
       onRemoveJob={removeJobHandler}
-      jobTitle={job.jobTitle}
-      jobLocation={job.jobLocation}
-      jobSalary={job.jobSalary}
-      id={job.id}
-      key={job.id}
+      jobId={job.jobId}
+      customer={job.customer}
+      location={job.location}
     />
   ));
   console.log(displayJoblist);
