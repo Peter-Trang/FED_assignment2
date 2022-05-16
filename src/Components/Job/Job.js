@@ -77,7 +77,7 @@ const Job = (props) => {
 
   const displayModelsAddedToJob = addedModels.map((model) => {
     return (
-      <li className="model-name">
+      <li className="model-name" key={model.email}>
         {model.firstName}{" "}
         <IoTrashSharp
           className="delete-model-button"
