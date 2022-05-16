@@ -4,9 +4,11 @@ import LoginForm from "./Components/LoginForm/LoginForm";
 import { useState } from "react";
 import AuthContext from './Components/auth-context';
 import Navbar from './Components/Navbar/Navbar';
+import jwt_decode from "jwt-decode";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [modelId, setModelId] = useState();
   const [error, setError] = useState("");
 
   async function Login(details) {
@@ -23,6 +25,9 @@ function App() {
         let token = await response.json();
         localStorage.setItem("token", token.jwt);
         setIsLoggedIn(true);
+        var decoded = jwt_decode(token.jwt);
+        setModelId(decoded.ModelId);
+
       } else {
         alert("Server returned: " + response.statusText);
       }
@@ -46,7 +51,6 @@ function App() {
   // }
 
   const Logout = () => {
-    console.log("logout");
     setIsLoggedIn(false);
   }
 
@@ -54,6 +58,7 @@ function App() {
     <div className="App">
       <AuthContext.Provider value={{
         isLoggedIn: isLoggedIn,
+        modelId: modelId,
       }}>
         <Navbar Logout={Logout} />
         {isLoggedIn && (<Home />)}

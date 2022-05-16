@@ -5,11 +5,13 @@ import { IoTrashSharp, IoClose, IoClipboard } from "react-icons/io5";
 
 const Job = (props) => {
   const [showModelsToAdd, setShowModelsToAdd] = useState(false);
+  const [showExpensesToAdd, setShowExpensesToAdd] = useState(false);
   const [addedModels, setAddedModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [selectedText, setSelectedText] = useState();
+  const [selectedAmount, setSelectedAmount] = useState();
   const [options, setOptions] = useState([]);
-
-  
 
   async function getModels() {
     let url = "https://localhost:7181/api/Models";
@@ -24,17 +26,19 @@ const Job = (props) => {
 
       if (response.ok) {
         let options = await response.json();
-        console.log(JSON.stringify(options));
         setOptions(options);
+        setSelectedModel(options[0].efModelId)
       } else {
         alert("Server returned: " + response.statusText);
       }
     } catch (err) {
       alert("Error: " + err);
     }
-    return;
+    return options;
   }
 
+  
+  
   async function getModelsAddedToJob() {
     let url = `https://localhost:7181/api/Jobs/${props.jobId}`;
     try {
@@ -48,7 +52,6 @@ const Job = (props) => {
 
       if (response.ok) {
         let models = await response.json();
-        console.log(JSON.stringify(options));
         setAddedModels(models.models);
       } else {
         alert("Server returned: " + response.statusText);
@@ -59,33 +62,67 @@ const Job = (props) => {
     return;
   }
 
+  useEffect(() => {
+    getModelsAddedToJob()
+  }, [getModelsAddedToJob])
+
+
   const displayModelsAddedToJob = addedModels.map((model) => {
     return (
-      <ul>
-        <li className="model-name">{model.firstName}</li>
-      </ul>
+        <li className="model-name">{model.firstName} <IoTrashSharp className="delete-model-button" key={model.email} onClick={() => removeModelHandler(model.email)}/></li>
     )});
 
+    async function removeModelHandler  (modelemail)  {
 
-    
+      console.log(modelemail);
+      let model;
+      
+        let allModels = await getModels()
+        console.log(allModels)
+        model = allModels.find(option => option.email === modelemail);
+      
+      console.log(model)
+      var url = `https://localhost:7181/api/Jobs/${props.jobId}/model/${model.efModelId}`;
+      await fetch(url, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((responseJson) => {
+        })
+        .catch((error) => alert("Something bad happened: " + error));
+    };
+  
 
   const showModels = () => {
     setShowModelsToAdd(!showModelsToAdd);
 
     getModels();
-
-    setSelectedModel(options[0].efModelId)
-    console.log(options[0].efModelId)
-    console.log(selectedModel.efModelId)
+    
   };
+
+  const showExpenses = () => {
+    setShowExpensesToAdd(!showExpensesToAdd);
+  };
+
 
   const selectedModelHandler = (event) => {
     setSelectedModel(event.target.value);
-    console.log(selectedModel)
-    console.log(event.target.innerText)
+  }
+  const selectedDateHandler = (event) => {
+    setSelectedDate(event.target.value);
+  }
+  const selectedTextHandler = (event) => {
+    setSelectedText(event.target.value);
+  }
+  const selectedAmountHandler = (event) => {
+    setSelectedAmount(event.target.value);
   }
 
-  const submitHandler = (event) => {
+  const submitModelHandler = (event) => {
     event.preventDefault();
     var url = `https://localhost:7181/api/Jobs/${props.jobId}/model/${selectedModel}`;
     fetch(url, {
@@ -102,6 +139,43 @@ const Job = (props) => {
         // this.response = responseJson;
       })
       .catch((error) => alert("Something bad happened: " + error));
+
+      getModelsAddedToJob();
+  };
+
+
+  const submitExpenseHandler = (event) => {
+    event.preventDefault();
+    var url = `https://localhost:7181/api/Expenses`;
+
+    const expenseData = {
+      modelId: props.modelId,
+      jobId: props.jobId,
+      date: selectedDate,
+      text: selectedText,
+      amount: selectedAmount,
+  }
+
+    console.log(expenseData)
+
+    fetch(url, {
+      method: "POST", // Or PUT
+      body: JSON.stringify(expenseData), // assumes your data is in form object on your instance.
+      credentials: "include",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    })
+      .then((responseJson) => {
+        // this.response = responseJson;
+      })
+      .catch((error) => alert("Something bad happened: " + error));
+
+    setSelectedDate("")
+    setSelectedText("")
+    setSelectedAmount("")
+    
   };
 
   let toggleAddModelOption = null;
@@ -120,18 +194,35 @@ const Job = (props) => {
     );
   }
 
-  useEffect(() => {
-    getModelsAddedToJob()
-  }, [])
+  let toggleAddModelExpense = null;
+
+  if (showModelsToAdd) {
+    toggleAddModelExpense = (
+      <div>
+        <IoClose />
+      </div>
+    );
+  } else {
+    toggleAddModelExpense = (
+      <h6>
+        Add expense to the job <IoClipboard />
+      </h6>
+    );
+  }
+
+
+  // useEffect(() => {
+  //   getModels()
+  // }, [getModels])
 
   return (
     <div className="job">
       <p className="job-title">
         {props.customer}
-        <IoTrashSharp
+        {props.modelId == -1 && <IoTrashSharp
           className="trash-icon"
           onClick={() => props.onRemoveJob(props.jobId)}
-        />
+        />}
       </p>
       <hr />
       <p>
@@ -140,15 +231,39 @@ const Job = (props) => {
         {props.location}
       </p>
       <hr />
-      <div className="added-models">{displayModelsAddedToJob}</div>
+      {props.modelId == -1 && ( <div>
+      <ul className="list-of-model-names">{displayModelsAddedToJob}</ul>
       <div className="expand-button" onClick={showModels}>
         {toggleAddModelOption}
       </div>
+      </div>)}
+      {props.modelId != -1 && ( <div>
+      <div className="expand-button" onClick={showExpenses}>
+        {toggleAddModelExpense}
+      </div>
+      </div>)}
+
+      {showExpensesToAdd && (
+        <form onSubmit={submitExpenseHandler} className="add-model-form-wrapper">
+          <div className="add-expense-form">
+          <label className="expense-labels">Date</label>
+          <input type="date" value={selectedDate} onChange={selectedDateHandler}/>
+          <label className="expense-labels">text</label>
+          <input type="text" value={selectedText} onChange={selectedTextHandler}/>
+          <label className="expense-labels">amount</label>
+          </div>
+          <input type="number" value={selectedAmount} onChange={selectedAmountHandler}/>
+          <button type="submit" className="button add-model-button">
+            Add Expense
+          </button>
+        </form>
+      )}
+
       {showModelsToAdd && (
-        <form onSubmit={submitHandler} className="add-model-form-wrapper">
+        <form onSubmit={submitModelHandler} className="add-model-form-wrapper">
           <select value={selectedModel} onChange={selectedModelHandler}>
             {options.map((option) => (
-              <option value={option.efModelId}>{option.firstName}</option>
+              <option value={option.efModelId} key={option.efModelId}>{option.firstName}</option>
             ))}
           </select>{" "}
           <button type="submit" className="button add-model-button">

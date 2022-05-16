@@ -61,3 +61,37 @@ h6 {
 .add-model-form-wrapper {
     margin-bottom: 1rem;
 }
+
+.expense-labels {
+    margin-top: 0.25rem;
+}
+
+.add-expense-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.model-name {
+    list-style: none;
+    border-radius: 0.25rem;
+    padding:0.5rem;
+    background-color: #ccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-of-model-names {
+    padding: 0;
+}
+.list-of-model-names >* {
+    margin-bottom: 0.5rem;
+}
+
+.delete-model-button {
+    cursor: pointer;
+}
+
+.delete-model-button:hover {
+    transform: scale(1.1);
+    color:rgb(183, 20, 20);
+}

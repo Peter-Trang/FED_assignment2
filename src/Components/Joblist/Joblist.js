@@ -13,9 +13,10 @@ const Joblist = (props) =>{
       jobId={job.jobId}
       customer={job.customer}
       location={job.location}
+      modelId={props.modelId}
+      key={job.jobId}
     />
   ));
-  console.log(displayJoblist);
 
   return (
     <div className="joblist">

@@ -25,7 +25,6 @@ function Home() {
       },
     })
       .then((responseJson) => {
-        console.log(responseJson);
       })
       .catch((error) => alert("Something bad happened: " + error));
 
@@ -34,7 +33,6 @@ function Home() {
 
   async function removeJobHandler  (jobId)  {
     var url = `https://localhost:7181/api/Jobs/${jobId}`;
-    console.log(url);
     await fetch(url, {
       method: "DELETE",
       credentials: "include",
@@ -44,7 +42,6 @@ function Home() {
       },
     })
       .then((responseJson) => {
-        console.log(responseJson);
       })
       .catch((error) => alert("Something bad happened: " + error));
     
@@ -90,7 +87,6 @@ function Home() {
     setTab(tab);
   }
 
-  console.log(Tab);
 
   async function getJobs() {
     let url = "https://localhost:7181/api/Jobs";
@@ -105,7 +101,6 @@ function Home() {
 
       if (response.ok) {
         let jobs = await response.json();
-        console.log(JSON.stringify(jobs));
         setJoblist(jobs);
       } else {
         alert("Server returned: " + response.statusText);
@@ -142,7 +137,7 @@ function Home() {
       {(context) => {
         return (
           <div className="home">
-            {context.isLoggedIn && (
+            {(context.isLoggedIn && context.modelId == -1) && (
               <div className="create-module">
                 <div className="button-container">
                   <button onClick={() => tabHandler("Job")}>Job</button>
@@ -171,7 +166,7 @@ function Home() {
               </div>
             )}
             {context.isLoggedIn && (
-              <Joblist joblist={joblist} onRemoveJob={removeJobHandler} />
+              <Joblist joblist={joblist} onRemoveJob={removeJobHandler} modelId={context.modelId} />
             )}
           </div>
         );
