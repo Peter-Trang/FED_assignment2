@@ -20,9 +20,9 @@ function LoginForm({Login, error}) {
     <div className="login-form">
         <form onSubmit={submitHandler}>
           {error && <p className="error">{error}</p>}
-          <label for="email">E-mail:</label><br/>
+          <label htmlFor="email">E-mail:</label><br/>
           <input type="email" value={details.email} id="email" name="email" placeholder="John@doe.com" onChange={handleEmail}/><br/>
-          <label for="password">Password:</label><br/>
+          <label htmlFor="password">Password:</label><br/>
           <input type="password" value={details.password} id="password" name="password" placeholder="***" onChange={handlePassword}/><br/><br/>
           <button className="login-button" type="submit">Login</button>
         </form> 
