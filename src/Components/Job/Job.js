@@ -14,30 +14,6 @@ const Job = (props) => {
   const [options, setOptions] = useState([]);
   const [modelAdded, setModelAdded] = useState(false);
 
-  const getModels = useCallback(async () => {
-    let url = "https://localhost:7181/api/Models";
-    try {
-      let response = await fetch(url, {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Bearer " + localStorage.getItem("token"),
-          "Content-Type": "application/json",
-        }),
-      });
-
-      if (response.ok) {
-        let options = await response.json();
-        setOptions(options);
-        setSelectedModel(options[0].efModelId);
-      } else {
-        alert("Server returned: " + response.statusText);
-      }
-    } catch (err) {
-      alert("Error: " + err);
-    }
-    return options;
-  }, []);
-
   const getModelsAddedToJob = useCallback(async () => {
     let url = `https://localhost:7181/api/Jobs/${props.jobId}`;
     try {
@@ -64,6 +40,31 @@ const Job = (props) => {
   useEffect(() => {
     getModelsAddedToJob();
   }, [getModelsAddedToJob]);
+  
+  const getModels = useCallback(async () => {
+    let url = "https://localhost:7181/api/Models";
+    try {
+      let response = await fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        }),
+      });
+
+      if (response.ok) {
+        let options = await response.json();
+        setOptions(options);
+        setSelectedModel(options[0].efModelId);
+      } else {
+        alert("Server returned: " + response.statusText);
+      }
+    } catch (err) {
+      alert("Error: " + err);
+    }
+    return options;
+  }, []);
+
 
   useEffect(() => {
     getModels();
